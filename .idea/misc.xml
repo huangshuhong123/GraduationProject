@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="MavenProjectsManager">
+    <option name="originalFiles">
+      <list>
+        <option value="$PROJECT_DIR$/graduation-gateway/pom.xml" />
+        <option value="$PROJECT_DIR$/graduation-eureka/pom.xml" />
+        <option value="$PROJECT_DIR$/graduation-client/pom.xml" />
+        <option value="$PROJECT_DIR$/graduation-parent/pom.xml" />
+        <option value="$PROJECT_DIR$/graduation-video/pom.xml" />
+        <option value="$PROJECT_DIR$/graduation-video/graduation-video-pojo/pom.xml" />
+        <option value="$PROJECT_DIR$/graduation-video/graduation-video-web/pom.xml" />
+        <option value="$PROJECT_DIR$/graduation-common/pom.xml" />
+        <option value="$PROJECT_DIR$/graduation-video/common/pom.xml" />
+        <option value="$PROJECT_DIR$/graduation-video/pojo/pom.xml" />
+        <option value="$PROJECT_DIR$/graduation-video/web/pom.xml" />
+        <option value="$PROJECT_DIR$/graduation-config/pom.xml" />
+      </list>
+    </option>
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_8" default="false" project-jdk-name="1.8" project-jdk-type="JavaSDK" />
+</project>

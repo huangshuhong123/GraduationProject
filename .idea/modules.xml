@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/GraduationProject.iml" filepath="$PROJECT_DIR$/.idea/GraduationProject.iml" />
+      <module fileurl="file://$PROJECT_DIR$/graduation-client/graduation-client.iml" filepath="$PROJECT_DIR$/graduation-client/graduation-client.iml" />
+      <module fileurl="file://$PROJECT_DIR$/graduation-common/graduation-common.iml" filepath="$PROJECT_DIR$/graduation-common/graduation-common.iml" />
+      <module fileurl="file://$PROJECT_DIR$/graduation-config/graduation-config.iml" filepath="$PROJECT_DIR$/graduation-config/graduation-config.iml" />
+      <module fileurl="file://$PROJECT_DIR$/graduation-eureka/graduation-eureka.iml" filepath="$PROJECT_DIR$/graduation-eureka/graduation-eureka.iml" />
+      <module fileurl="file://$PROJECT_DIR$/graduation-gateway/graduation-gateway.iml" filepath="$PROJECT_DIR$/graduation-gateway/graduation-gateway.iml" />
+      <module fileurl="file://$PROJECT_DIR$/graduation-video/graduation-video.iml" filepath="$PROJECT_DIR$/graduation-video/graduation-video.iml" />
+      <module fileurl="file://$PROJECT_DIR$/graduation-video/common/graduation-video-common.iml" filepath="$PROJECT_DIR$/graduation-video/common/graduation-video-common.iml" />
+      <module fileurl="file://$PROJECT_DIR$/graduation-video/pojo/graduation-video-pojo.iml" filepath="$PROJECT_DIR$/graduation-video/pojo/graduation-video-pojo.iml" />
+      <module fileurl="file://$PROJECT_DIR$/graduation-video/web/graduation-video-web.iml" filepath="$PROJECT_DIR$/graduation-video/web/graduation-video-web.iml" />
+    </modules>
+  </component>
+</project>

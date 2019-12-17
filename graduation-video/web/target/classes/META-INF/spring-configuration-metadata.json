@@ -1,0 +1,27 @@
+{
+  "hints": [],
+  "groups": [
+    {
+      "sourceType": "com.zhku.config.ResourceConfig",
+      "name": "com.zhku",
+      "type": "com.zhku.config.ResourceConfig"
+    }
+  ],
+  "properties": [
+    {
+      "sourceType": "com.zhku.config.ResourceConfig",
+      "name": "com.zhku.bgm-server",
+      "type": "java.lang.String"
+    },
+    {
+      "sourceType": "com.zhku.config.ResourceConfig",
+      "name": "com.zhku.file-space",
+      "type": "java.lang.String"
+    },
+    {
+      "sourceType": "com.zhku.config.ResourceConfig",
+      "name": "com.zhku.zookeeper-server",
+      "type": "java.lang.String"
+    }
+  ]
+}
