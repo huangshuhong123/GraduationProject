@@ -18,19 +18,6 @@ import java.util.Map;
  */
 public interface DsfMessageRefService extends IService<DsfMessageRefPO> {
 
-    PageUtils queryPage(Map<String, Object> params);
-
-    void update(String userId, String terminalType, Date date);
-
-    void delete(List<Long> messageId);
-
-    public PageUtils<DsfMessageRefPO> queryList(Map<String, Object> map);
-
-    void updateMessageState(List<Long> messageIds, String userId);
-
-    int getUnreadCount(String terminalType, String userId);
-
-    int getSiteUnreadCount(String terminalType, String userId, String site);
 
 
 }

@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.zhku.message.mapper.DsfMessageRefDao">
+
+	<!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="com.zhku.pojo.DsfMessageRefPO" id="dsfMessageRefMap">
+        <result property="id" column="id"/>
+        <result property="messageId" column="message_id"/>
+        <result property="messageAcceptId" column="message_accept_id"/>
+        <result property="messageState" column="message_state"/>
+    </resultMap>
+  <update id="update">
+      <![CDATA[
+          UPDATE tb_dsf_message_ref t1
+          SET t1.message_state = 1
+          WHERE
+          EXISTS (
+          SELECT
+          *
+          FROM
+          tb_dsf_message_log t
+          WHERE
+          t.message_send_userid = #{userId}
+          AND t.send_time < DATE_FORMAT(#{date},'%Y-%m-%d %H:%i')
+          AND t.terminal_type = #{terminalType}
+          AND t.message_id = t1.message_id
+          )
+      ]]>
+  </update>
+
+    <delete id="delete" >
+        <!--delete from tb_dsf_message_ref where message_id in(
+        <foreach collection="list" item="messageId" separator=",">
+              #{messageId}
+        </foreach>
+        )-->
+
+        update tb_dsf_message_ref set delete_flag = 1  where message_id in
+        <foreach collection="messageIds" item="messageId" separator="," open="(" close=")">
+            #{messageId}
+        </foreach>
+         and  message_accept_id = #{userId}
+    </delete>
+
+    <select id="queryList" resultMap="dsfMessageRefMap" >
+
+        SELECT
+        t3.*, t4.person_name messageAcceptName
+        FROM
+        tb_dsf_message_ref t3
+        LEFT JOIN tb_dsf_user t5 ON t3.message_accept_id = t5.user_name
+        LEFT JOIN tb_dsf_user_person_ref t2   ON t2.user_id = t5.user_id
+        LEFT JOIN tb_dsf_person t4 on t4.person_id = t2.person_id
+        <where>
+        <if test="messageId != null and messageId.trim() != ''">
+            t3.message_id = #{messageId}
+        </if>
+        <if test="messageState != null and messageState.trim() != ''">
+            and t3.message_state = #{messageState}
+        </if>
+        <if test="messageAcceptId != null and messageAcceptId.trim() != ''">
+            and t3.message_accept_id like '%${messageAcceptId}%'
+        </if>
+        <if test="messageAcceptName != null and messageAcceptName.trim() != ''">
+            and t4.person_name like  '%${messageAcceptName}%'
+        </if>
+        </where>
+    </select>
+
+    <update id="updateMessageState">
+
+	update tb_dsf_message_ref
+	set message_state = 1
+	where
+
+	message_id in
+             <foreach collection="messageIds" item="messageId" index="index" open="(" close=")" separator=",">
+             #{messageId}
+            </foreach>
+            and message_accept_id = #{userId}
+        
+    </update>
+
+    <select id="getUnreadCount" resultType="int">
+        select count(1)
+        from tb_dsf_message_log t1,tb_dsf_message_ref t2
+        where t1.message_id = t2.message_id
+        and t1.template_type = '01'
+        and t2.message_accept_id = #{userId}
+        and t2.message_state = 0
+        and t2.delete_flag = 0
+    </select>
+
+
+   <select id="getSiteUnreadCount" resultType="int">
+        select count(1)
+        from tb_dsf_message_log t1,tb_dsf_message_ref t2
+        where t1.message_id = t2.message_id
+        and t1.template_type = '01'
+        and t2.message_accept_id = #{userId}
+        and t2.message_state = 0
+        and t2.delete_flag = 0
+       <if test="site != null and site != ''">
+         <choose>
+                <when test="site == 'PC'">
+                 	and t1.znx_pc_url is not null
+                    and t1.znx_pc_url != ''
+                </when>
+                  <when test="site == 'wx'">
+                   and t1.znx_wx_url is not null
+                   and t1.znx_wx_url != ''
+                </when>
+               <when test="site == 'xcx'">
+                   and t1.znx_xcx_url is not null
+                   and t1.znx_xcx_url != ''
+                </when>
+            </choose>
+              </if>
+     
+    </select>
+</mapper>

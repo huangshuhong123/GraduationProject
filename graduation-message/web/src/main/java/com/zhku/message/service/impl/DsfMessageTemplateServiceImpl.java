@@ -8,8 +8,8 @@ import com.baomidou.mybatisplus.plugins.Page;
 import com.baomidou.mybatisplus.service.impl.ServiceImpl;
 import com.zhku.message.mapper.DsfMessageTemplateDao;
 import com.zhku.message.service.DsfMessageTemplateService;
+import com.zhku.message.utils.BaseUtil;
 import com.zhku.pojo.DsfMessageTemplateEntity;
-import com.zhku.utils.BaseUtil;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Service;
 

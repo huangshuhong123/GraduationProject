@@ -3,6 +3,7 @@ package com.zhku.message.listener;
 
 import com.google.common.collect.Lists;
 import com.zhku.message.listener.config.QueueNameConfig;
+import com.zhku.message.service.DsfMessageLogService;
 import com.zhku.pojo.MessageRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,17 +23,10 @@ import java.util.stream.Collectors;
 @Component
 public class MessageListener {
     Logger logger = LoggerFactory.getLogger(MessageListener.class);
-    @Autowired
-    private SendMsgUtil sendMsgUtil;
-    @Autowired
-    private PartyMemberClient partyMemberClient;
+
     @Autowired
     private DsfMessageLogService dsfMessageLogService;
-    @Autowired
-    private DsfMessageBufferService dsfMessageBufferService;
 
-   @Autowired
-   private DsfMsgBufferService dsfMsgBufferService;
 
     /**
      * 站内信

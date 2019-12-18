@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.zhku.message.mapper.DsfMessageLogDao">
+
+    <insert id="save" useGeneratedKeys="true" keyProperty="messageId" >
+          insert into tb_dsf_message_log(
+            message_content
+            ,message_url
+            ,message_send_userid
+            ,message_type
+            ,terminal_type
+            ,send_time
+            ,title
+            ,media_id
+            ,module_name
+            ) values
+            (#{messageContent},#{messageUrl},#{messageSendUserid},#{messageType},#{terminalType},#{sendTime},#{title},#{mediaId},#{moduleName})
+    </insert>
+
+    
+</mapper>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.zhku.message.mapper.DsfMessageTemplateDao">
+
+	<!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="com.zhku.pojo.DsfMsgTemplatePO" id="dsfMsgTemplateMap">
+        <result property="id" jdbcType="VARCHAR" column="id"/>
+        <result property="messageCode" jdbcType="VARCHAR" column="message_code"/>
+        <result property="moduleName" jdbcType="VARCHAR" column="module_name"/>
+        <result property="moduleType" jdbcType="VARCHAR" column="module_type"/>
+        <result property="messageType" jdbcType="VARCHAR" column="message_type"/>
+        <result property="content" jdbcType="VARCHAR" column="content"/>
+        <result property="remarks" jdbcType="VARCHAR" column="remarks"/>
+        <result property="templateState" jdbcType="VARCHAR" column="template_state"/>
+        <result property="filterWhite" jdbcType="VARCHAR" column="filter_white"/>
+        <result property="filterBlack" jdbcType="VARCHAR" column="filter_black"/>
+        <result property="isDelete" jdbcType="BOOLEAN" column="is_delete"/>
+        <result property="createUser" jdbcType="VARCHAR" column="create_user"/>
+        <result property="createName" jdbcType="VARCHAR" column="create_name"/>
+        <result property="createTime" jdbcType="TIMESTAMP" column="create_time"/>
+        <result property="updateUser" jdbcType="VARCHAR" column="update_user"/>
+        <result property="updateName" jdbcType="VARCHAR" column="update_name"/>
+        <result property="updateTime" jdbcType="TIMESTAMP" column="update_time"/>
+    </resultMap>
+
+</mapper>

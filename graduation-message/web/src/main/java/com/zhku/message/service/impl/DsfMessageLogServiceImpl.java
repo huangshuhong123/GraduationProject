@@ -9,12 +9,12 @@ import com.google.common.collect.Maps;
 import com.zhku.message.mapper.DsfMessageLogDao;
 import com.zhku.message.service.DsfMessageLogService;
 import com.zhku.message.service.DsfMessageRefService;
+import com.zhku.message.utils.BaseUtil;
+import com.zhku.message.utils.JsonUtils2;
 import com.zhku.message.utils.MessageConvertor;
 import com.zhku.pojo.DsfMessageLogEntity;
 import com.zhku.pojo.DsfMessageRefPO;
 import com.zhku.pojo.MessageRequest;
-import com.zhku.utils.BaseUtil;
-import com.zhku.utils.JsonUtils2;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -66,7 +66,8 @@ public class DsfMessageLogServiceImpl extends ServiceImpl<DsfMessageLogDao, DsfM
 		insert(dsfMessageLogEntity);
 
 		//获取所有接收人
-		List<String> userIdList = getUserIdList(request);
+		//List<String> userIdList = getUserIdList(request);
+		List<String> userIdList = request.getAcceptUserIdList();
 		Long messageId = dsfMessageLogEntity.getMessageId();
 		if (BaseUtil.isNotEmpty(userIdList)) {
 			for (String userId : userIdList) {
@@ -74,7 +75,7 @@ public class DsfMessageLogServiceImpl extends ServiceImpl<DsfMessageLogDao, DsfM
 				dsfMessageRefEntity.setMessageId(messageId);
 				dsfMessageRefEntity.setMessageAcceptId(userId);
 				//补充个性化用户信息
-				getUserInfo(userId,request);
+				//getUserInfo(userId,request);
 				String content = MessageConvertor.getSendContent(request);
 				dsfMessageRefEntity.setMessageContent(content);
 				dsfMessageRefEntity.setMessageState(0);
@@ -88,9 +89,4 @@ public class DsfMessageLogServiceImpl extends ServiceImpl<DsfMessageLogDao, DsfM
 		}
 		return messageId;
 	}
-
-
-
-
-
 }
