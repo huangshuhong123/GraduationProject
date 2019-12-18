@@ -10,10 +10,10 @@ import tk.mybatis.spring.annotation.MapperScan;
 @EnableDiscoveryClient
 @MapperScan(basePackages="com.zhku.mapper")
 @ComponentScan(basePackages= {"com.zhku"})
-public class Application {
+public class MessageApplication {
 	
 	public static void main(String[] args) {
-		SpringApplication.run(Application.class,args);
+		SpringApplication.run(MessageApplication.class,args);
 	}
 	
 }
