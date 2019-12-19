@@ -42,5 +42,8 @@
   <update id="reduceFollersCount" parameterType="String">
   	update users set follow_counts=follow_counts-1 where id=#{userId}
   </update>
-  
+    <select id="selectUserNameById" resultType="java.lang.String">
+        select username from users where id = #{fanId}
+    </select>
+
 </mapper>

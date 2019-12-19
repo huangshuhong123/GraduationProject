@@ -11,7 +11,7 @@ import tk.mybatis.spring.annotation.MapperScan;
 @EnableFeignClients
 @EnableDiscoveryClient
 @MapperScan(basePackages="com.zhku.mapper")
-@ComponentScan(basePackages= {"com.zhku", "org.n3r.idworker"})
+@ComponentScan(basePackages= {"com.zhku","org.n3r.idworker"})
 public class Application {
 	
 	public static void main(String[] args) {

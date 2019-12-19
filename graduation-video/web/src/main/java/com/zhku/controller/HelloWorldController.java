@@ -1,7 +1,6 @@
 package com.zhku.controller;
 
 import com.zhku.message.MessageFeignClient;
-import com.zhku.utils.FeignResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -18,9 +17,9 @@ public class HelloWorldController {
 
 	@RequestMapping(value = "/hello", method = RequestMethod.GET)
 	public String hello() {
-		FeignResult hello = messageFeignClient.hello();
+		String hello = messageFeignClient.hello();
 		System.out.println("hello" + hello);
-		return "Hello Spring Boot~";
+		return hello + " : " +"Hello Spring Boot~";
 	}
 	
 }

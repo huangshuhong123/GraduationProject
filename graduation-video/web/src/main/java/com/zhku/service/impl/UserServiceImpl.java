@@ -1,10 +1,16 @@
 package com.zhku.service.impl;
 
-import java.util.Date;
-import java.util.List;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
+import com.alibaba.fastjson.JSONObject;
+import com.zhku.message.MessageFeignClient;
+import com.zhku.pojo.*;
+import com.zhku.utils.ConstantUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.n3r.idworker.Sid;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -14,17 +20,20 @@ import com.zhku.mapper.UsersFansMapper;
 import com.zhku.mapper.UsersLikeVideosMapper;
 import com.zhku.mapper.UsersMapper;
 import com.zhku.mapper.UsersReportMapper;
-import com.zhku.pojo.Users;
-import com.zhku.pojo.UsersFans;
-import com.zhku.pojo.UsersLikeVideos;
-import com.zhku.pojo.UsersReport;
 import com.zhku.service.UserService;
 
 import tk.mybatis.mapper.entity.Example;
 import tk.mybatis.mapper.entity.Example.Criteria;
 
+import javax.annotation.Resource;
+
 @Service
 public class UserServiceImpl implements UserService {
+
+	private  final Logger logger = LoggerFactory.getLogger(UserServiceImpl.class);
+
+	@Resource
+	public  MessageFeignClient messageFeignClient;
 
 	@Autowired
 	private UsersMapper userMapper;
@@ -40,7 +49,7 @@ public class UserServiceImpl implements UserService {
 	
 	@Autowired
 	private Sid sid;
-	
+
 	@Transactional(propagation = Propagation.SUPPORTS)
 	@Override
 	public boolean queryUsernameIsExist(String username) {
@@ -133,7 +142,41 @@ public class UserServiceImpl implements UserService {
 		
 		userMapper.addFansCount(userId);
 		userMapper.addFollersCount(fanId);
-		
+
+		String fansName = userMapper.selectUserNameById(fanId);
+
+		SimpleDateFormat formatter2 = new SimpleDateFormat("y年M月d日 h时m分");
+		String subTime = formatter2.format(new Date());
+
+		List<String> userIds = new ArrayList<>();
+		userIds.add(userId);
+
+		//站内信
+		Map<String, String> parametersZnxGr = new HashMap<>();
+		parametersZnxGr.put("remark",fansName + " " + "在 " + subTime + " 关注了您哦~");
+		String znxPcUrl = ""; //管理后台 跳转到意见建议详情页（暂时无法跳转）
+		//地址暂定不知道
+		String znxXcxUrl = ""; //小程序 跳转到意见建议详情页
+		String znxWxUrl = fanId; //urlZwwx;
+		this.pushTaskMessage(ConstantUtil.YJJY_MESSAGE_ZNX_CODE, parametersZnxGr, userIds, null, null, znxPcUrl, znxWxUrl, znxXcxUrl);
+	}
+
+	public  void  pushTaskMessage(String templateCode, Map<String, String> messageParam, List<String> acceptUserIdList, List<String> acceptUserGroupIdList, List<String> acceptDeptartmentIdList,
+								  String znxPcUrl, String znxWxUrl, String znxXcxUrl){
+		MessageRequest messageRequest = new MessageRequest();
+		messageRequest.setTemplateCode(templateCode);
+		messageRequest.setMessageSendUserid(znxWxUrl);
+		messageRequest.setMessageParam(messageParam);
+		messageRequest.setAcceptUserIdList(acceptUserIdList);
+		messageRequest.setAcceptUserGroupIdList(acceptUserGroupIdList);
+		messageRequest.setAcceptDeptartmentIdList(acceptDeptartmentIdList);
+		messageRequest.setZnxPcUrl(znxPcUrl);
+		messageRequest.setZnxWxUrl(znxWxUrl);
+		messageRequest.setZnxXcxUrl(znxXcxUrl);
+		logger.info("messageRequest={}", JSONObject.toJSONString(messageRequest));
+		String hello = messageFeignClient.hello();
+		System.out.println(hello);
+		messageFeignClient.sendMsg(messageRequest);
 	}
 
 	@Transactional(propagation = Propagation.REQUIRED)

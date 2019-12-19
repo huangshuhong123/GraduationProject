@@ -34,4 +34,6 @@ public interface UsersMapper extends MyMapper<Users> {
 	 * @Description: 减少关注数
 	 */
 	public void reduceFollersCount(String userId);
+
+    String selectUserNameById(String fanId);
 }
