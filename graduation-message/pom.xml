@@ -37,7 +37,7 @@
     </dependencyManagement>
 
     <modules>
-        <module>client</module>
+        <module>graduation-message-client</module>
         <module>pojo</module>
         <module>web</module>
     </modules>
