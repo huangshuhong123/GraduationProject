@@ -19,6 +19,17 @@ import java.util.Map;
 public interface DsfMessageRefService extends IService<DsfMessageRefPO> {
 
 
+    void update(String userId, String terminalType, Date date);
+
+    void delete(List<Long> messageId);
+
+
+    void updateMessageState(List<Long> messageIds,String userId);
+
+    int getUnreadCount(String terminalType,String userId);
+
+    int getSiteUnreadCount(String terminalType,String userId,String site);
+
 
 }
 

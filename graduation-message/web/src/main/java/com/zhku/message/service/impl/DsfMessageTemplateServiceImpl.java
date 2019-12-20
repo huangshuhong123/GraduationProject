@@ -16,7 +16,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Map;
 
-@Service("dsfMessageTemplateService")
+@Service
 public class DsfMessageTemplateServiceImpl extends ServiceImpl<DsfMessageTemplateDao, DsfMessageTemplateEntity> implements DsfMessageTemplateService {
 
 

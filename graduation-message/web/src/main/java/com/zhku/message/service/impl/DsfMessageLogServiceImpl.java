@@ -4,6 +4,8 @@ package com.zhku.message.service.impl;
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.plugins.Page;
 import com.baomidou.mybatisplus.service.impl.ServiceImpl;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.zhku.message.mapper.DsfMessageLogDao;
@@ -14,7 +16,9 @@ import com.zhku.message.utils.JsonUtils2;
 import com.zhku.message.utils.MessageConvertor;
 import com.zhku.pojo.DsfMessageLogEntity;
 import com.zhku.pojo.DsfMessageRefPO;
+import com.zhku.pojo.MessageListReturnVo;
 import com.zhku.pojo.MessageRequest;
+import com.zhku.utils.PagedResult;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -32,8 +36,8 @@ import java.util.stream.Collectors;
  * @author admin
  *
  */
-@Service("dsfMessageLogService")
-public class DsfMessageLogServiceImpl extends ServiceImpl<DsfMessageLogDao, DsfMessageLogEntity> implements DsfMessageLogService {
+@Service
+public class DsfMessageLogServiceImpl implements DsfMessageLogService {
 
 	@Resource
 	private DsfMessageLogDao dsfMessageLogDao;
@@ -63,7 +67,7 @@ public class DsfMessageLogServiceImpl extends ServiceImpl<DsfMessageLogDao, DsfM
 		dsfMessageLogEntity.setZnxPcUrl(request.getZnxPcUrl());
 		dsfMessageLogEntity.setZnxWxUrl(request.getZnxWxUrl());
 		dsfMessageLogEntity.setZnxXcxUrl(request.getZnxXcxUrl());
-		insert(dsfMessageLogEntity);
+		//insert(dsfMessageLogEntity);
 
 		//获取所有接收人
 		//List<String> userIdList = getUserIdList(request);
@@ -88,5 +92,21 @@ public class DsfMessageLogServiceImpl extends ServiceImpl<DsfMessageLogDao, DsfM
 			}
 		}
 		return messageId;
+	}
+
+	@Override
+	public PagedResult queryList(String userId,Integer page, Integer pageSize) {
+		PageHelper.startPage(page, pageSize);
+		List<MessageListReturnVo> list = dsfMessageLogDao.queryLists(userId);
+
+		PageInfo<MessageListReturnVo> pageList = new PageInfo<MessageListReturnVo>(list);
+
+		PagedResult pagedResult = new PagedResult();
+		pagedResult.setPage(page);
+		pagedResult.setTotal(pageList.getPages());
+		pagedResult.setRows(list);
+		pagedResult.setRecords(pageList.getTotal());
+
+		return pagedResult;
 	}
 }

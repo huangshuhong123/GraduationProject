@@ -18,9 +18,35 @@ import java.util.Map;
  * @author admin
  *
  */
-@Service("dsfMessageRefService")
+@Service
 public class DsfMessageRefServiceImpl extends ServiceImpl<DsfMessageRefDao, DsfMessageRefPO> implements DsfMessageRefService {
     @Resource
     private DsfMessageRefDao dsfMessageRefDao;
+
+    @Override
+    public void update(String userId, String terminalType,Date date) {
+        dsfMessageRefDao.update(userId,terminalType,date);
+    }
+
+    @Override
+    public void delete(List<Long> messageId) {
+        //dsfMessageRefDao.delete(messageId);
+    }
+
+
+    @Override
+    public void updateMessageState(List<Long> messageIds,String userId) {
+        dsfMessageRefDao.updateMessageState(messageIds,userId);
+    }
+
+    @Override
+    public int getUnreadCount(String terminalType,String userId) {
+        return dsfMessageRefDao.getUnreadCount(terminalType,userId);
+    }
+
+    @Override
+    public int getSiteUnreadCount(String terminalType, String userId,String site) {
+        return dsfMessageRefDao.getSiteUnreadCount(terminalType,userId,site);
+    }
 
 }
