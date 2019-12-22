@@ -3,6 +3,7 @@ package com.zhku.controller;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
+import java.util.Map;
 
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -138,8 +139,11 @@ public class UserController extends BasicController {
 	}
 	
 	@PostMapping("/beyourfans")
-	public IMoocJSONResult beyourfans(String userId, String fanId) throws Exception {
-		
+	public IMoocJSONResult beyourfans(@RequestBody Map<String,Object> params) throws Exception {
+
+		String userId = (String) params.get("userId");
+		String fanId = (String) params.get("fanId");
+
 		if (StringUtils.isBlank(userId) || StringUtils.isBlank(fanId)) {
 			return IMoocJSONResult.errorMsg("");
 		}
