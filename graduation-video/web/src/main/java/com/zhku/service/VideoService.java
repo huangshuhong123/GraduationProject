@@ -58,6 +58,9 @@ public interface VideoService {
 	 * @Description: 留言分页
 	 */
 	 PagedResult getAllComments(String videoId, Integer page, Integer pageSize);
+
+    Videos getVideoInfo(String videoId);
+
 }
 
 

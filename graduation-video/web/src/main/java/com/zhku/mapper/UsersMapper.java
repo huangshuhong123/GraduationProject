@@ -3,6 +3,8 @@ package com.zhku.mapper;
 import com.zhku.pojo.Users;
 import com.zhku.utils.MyMapper;
 
+import java.util.List;
+
 public interface UsersMapper extends MyMapper<Users> {
 	
 	/**
@@ -36,4 +38,11 @@ public interface UsersMapper extends MyMapper<Users> {
 	public void reduceFollersCount(String userId);
 
     String selectUserNameById(String fanId);
+
+    String selectFaceUrlById(String fanId);
+
+    String findUserIdByVideoId(String videoId);
+
+    List<String> queryAllUser();
+
 }

@@ -144,8 +144,8 @@ public class UserServiceImpl implements UserService {
 		userMapper.addFollersCount(fanId);
 
 		String fansName = userMapper.selectUserNameById(fanId);
-
-		SimpleDateFormat formatter2 = new SimpleDateFormat("y年M月d日 h时m分");
+		String faceUrl = userMapper.selectFaceUrlById(fanId);
+		SimpleDateFormat formatter2 = new SimpleDateFormat("M月d日h点m分");
 		String subTime = formatter2.format(new Date());
 
 		List<String> userIds = new ArrayList<>();
@@ -156,7 +156,7 @@ public class UserServiceImpl implements UserService {
 		parametersZnxGr.put("remark",fansName + " " + "在 " + subTime + " 关注了您哦~");
 		String znxPcUrl = ""; //管理后台 跳转到意见建议详情页（暂时无法跳转）
 		//地址暂定不知道
-		String znxXcxUrl = ""; //小程序 跳转到意见建议详情页
+		String znxXcxUrl = faceUrl; //小程序 跳转到意见建议详情页
 		String znxWxUrl = fanId; //urlZwwx;
 		this.pushTaskMessage(ConstantUtil.YJJY_MESSAGE_ZNX_CODE, parametersZnxGr, userIds, null, null, znxPcUrl, znxWxUrl, znxXcxUrl);
 	}
@@ -224,6 +224,18 @@ public class UserServiceImpl implements UserService {
 		
 		usersReportMapper.insert(userReport);
 	}
-	
+
+	@Override
+	public String findUserIdByVideoId(String videoId) {
+		String userId = userMapper.findUserIdByVideoId(videoId);
+		return userId;
+	}
+
+	@Override
+	public List<String> queryAllUser() {
+		List<String> userIds = userMapper.queryAllUser();
+		return userIds;
+	}
+
 }
 

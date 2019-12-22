@@ -3,8 +3,15 @@ package com.zhku;
 import java.io.File;
 import java.net.URL;
 import java.net.URLEncoder;
-import java.util.Map;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
+import com.alibaba.fastjson.JSONObject;
+import com.zhku.message.MessageFeignClient;
+import com.zhku.pojo.MessageRequest;
+import com.zhku.service.UserService;
+import com.zhku.service.impl.UserServiceImpl;
+import com.zhku.utils.ConstantUtil;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.curator.RetryPolicy;
@@ -23,9 +30,17 @@ import com.zhku.config.ResourceConfig;
 import com.zhku.enums.BGMOperatorTypeEnum;
 import com.zhku.utils.JsonUtils;
 
+import javax.annotation.Resource;
+
 @Component
 public class ZKCuratorClient {
 
+	private  final Logger logger = LoggerFactory.getLogger(ZKCuratorClient.class);
+
+	@Autowired
+	private UserService userService;
+	@Resource
+	private MessageFeignClient messageFeignClient;
 	// zk客户端
 	private CuratorFramework client = null;	
 	final static Logger log = LoggerFactory.getLogger(ZKCuratorClient.class);
@@ -114,6 +129,15 @@ public class ZKCuratorClient {
 					if (operatorType.equals(BGMOperatorTypeEnum.ADD.type)) {
 						// 下载bgm到spingboot服务器
 						System.out.println(bgmUrl);
+						List<String> userIds = userService.queryAllUser();
+						//站内信
+						Map<String, String> parametersZnxGr = new HashMap<>();
+						parametersZnxGr.put("remark","管理员发布了新的BGM哦~");
+						String znxPcUrl = ""; //管理后台 跳转到意见建议详情页（暂时无法跳转）
+						//地址暂定不知道
+						String znxXcxUrl = ""; //小程序 跳转到意见建议详情页
+						String znxWxUrl = ""; //urlZwwx;
+						this.pushTaskMessage(ConstantUtil.YJJY_MESSAGE_ZNX_CODE, parametersZnxGr, userIds, null, null, null, null, null);
 						URL url = new URL(bgmUrl);
 						File file = new File(filePath);
 						FileUtils.copyURLToFile(url, file);
@@ -122,10 +146,44 @@ public class ZKCuratorClient {
 						File file = new File(filePath);
 						FileUtils.forceDelete(file);
 						client.delete().forPath(path);
+					}else if (operatorType.equals(BGMOperatorTypeEnum.FORBID.type)) {
+						System.out.println("33333333333333333333333333333333333333333333333333333333");
+						String userId = userService.findUserIdByVideoId(songPath);
+						List<String> userIds = new ArrayList<>();
+						userIds.add(userId);
+						SimpleDateFormat formatter2 = new SimpleDateFormat("M月d日h点m分");
+						String subTime = formatter2.format(new Date());
+						//站内信
+						Map<String, String> parametersZnxGr = new HashMap<>();
+						parametersZnxGr.put("remark","您的视频在"+ subTime +"被禁播了~");
+						String znxPcUrl = songPath; //管理后台 跳转到意见建议详情页（暂时无法跳转）
+						//地址暂定不知道
+						String znxXcxUrl = ""; //小程序 跳转到意见建议详情页
+						String znxWxUrl = ""; //urlZwwx;
+						this.pushTaskMessage(ConstantUtil.YJJY_MESSAGE_ZNX_CODE, parametersZnxGr, userIds, null, null, znxPcUrl, znxWxUrl, znxXcxUrl);
+						client.delete().forPath(path);
 					}
 				}
 			}
+
+			private void  pushTaskMessage(String templateCode, Map<String, String> messageParam, List<String> acceptUserIdList, List<String> acceptUserGroupIdList, List<String> acceptDeptartmentIdList,
+										   String znxPcUrl, String znxWxUrl, String znxXcxUrl){
+				MessageRequest messageRequest = new MessageRequest();
+				messageRequest.setTemplateCode(templateCode);
+				messageRequest.setMessageSendUserid(znxWxUrl);
+				messageRequest.setMessageParam(messageParam);
+				messageRequest.setAcceptUserIdList(acceptUserIdList);
+				messageRequest.setAcceptUserGroupIdList(acceptUserGroupIdList);
+				messageRequest.setAcceptDeptartmentIdList(acceptDeptartmentIdList);
+				messageRequest.setZnxPcUrl(znxPcUrl);
+				messageRequest.setZnxWxUrl(znxWxUrl);
+				messageRequest.setZnxXcxUrl(znxXcxUrl);
+				logger.info("messageRequest={}", JSONObject.toJSONString(messageRequest));
+				messageFeignClient.sendMsg(messageRequest);
+			}
 		});
 	}
+
+
 	
 }

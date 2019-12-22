@@ -221,4 +221,10 @@ public class VideoServiceImpl implements VideoService {
 		return grid;
 	}
 
+	@Override
+	public Videos getVideoInfo(String videoId) {
+		Videos video = videosMapper.getVideoInfo(videoId);
+		return video;
+	}
+
 }

@@ -9,10 +9,7 @@ import java.util.UUID;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.zhku.enums.VideoStatusEnum;
@@ -348,5 +345,10 @@ public class VideoController extends BasicController {
 		
 		return IMoocJSONResult.ok(list);
 	}
-	
+
+	@GetMapping("/getVideoInfo")
+	public IMoocJSONResult getVideoInfo(@RequestParam("videoId") String videoId){
+		Videos video = videoService.getVideoInfo(videoId);
+		return IMoocJSONResult.ok(video);
+	}
 }

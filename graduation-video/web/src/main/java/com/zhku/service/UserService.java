@@ -3,6 +3,8 @@ package com.zhku.service;
 import com.zhku.pojo.Users;
 import com.zhku.pojo.UsersReport;
 
+import java.util.List;
+
 public interface UserService {
 	
 	/**
@@ -54,4 +56,9 @@ public interface UserService {
 	 * @Description: 举报用户
 	 */
 	 void reportUser(UsersReport userReport);
+
+	 String findUserIdByVideoId(String videoId);
+
+    List<String> queryAllUser();
+
 }

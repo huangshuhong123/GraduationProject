@@ -18,4 +18,9 @@
     <result column="status" property="status" jdbcType="INTEGER" />
     <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
   </resultMap>
+    <select id="getVideoInfo" resultType="com.zhku.pojo.Videos">
+      select id,user_id as userId,audio_id as audioId,video_desc as videoDesc,video_path as videoPath,video_seconds as videoSeconds,
+      video_width as videoWidth,video_height as videoHeight,cover_path as coverPath,like_counts as likeCounts,status,create_time as createTime
+      from videos where id = #{videoId}
+    </select>
 </mapper>
