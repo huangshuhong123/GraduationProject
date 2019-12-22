@@ -73,12 +73,8 @@
 	update tb_dsf_message_ref
 	set message_state = 1
 	where
-
-	message_id in
-             <foreach collection="messageIds" item="messageId" index="index" open="(" close=")" separator=",">
-             #{messageId}
-            </foreach>
-            and message_accept_id = #{userId}
+	message_id = #{messageId}
+    and message_accept_id = #{userId}
         
     </update>
 

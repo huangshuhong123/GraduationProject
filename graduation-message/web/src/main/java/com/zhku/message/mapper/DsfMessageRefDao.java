@@ -26,7 +26,7 @@ public interface DsfMessageRefDao extends BaseMapper<DsfMessageRefPO> {
 
     public List<DsfMessageRefPO> queryList(Page<DsfMessageRefPO> page, Map<String, Object> map);
 
-    void updateMessageState(@Param("messageIds") List<Long> messageIds, @Param("userId") String userId);
+    void updateMessageState(@Param("messageId") Long messageId, @Param("userId") String userId);
 
     int getUnreadCount(@Param("terminalType") String terminalType, @Param("userId") String userId);
 

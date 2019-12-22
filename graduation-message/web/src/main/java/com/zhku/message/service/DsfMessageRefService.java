@@ -24,7 +24,7 @@ public interface DsfMessageRefService extends IService<DsfMessageRefPO> {
     void delete(List<Long> messageId);
 
 
-    void updateMessageState(List<Long> messageIds,String userId);
+    void updateMessageState(Long messageId,String userId);
 
     int getUnreadCount(String terminalType,String userId);
 

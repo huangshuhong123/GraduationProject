@@ -10,7 +10,8 @@ import tk.mybatis.spring.annotation.MapperScan;
 @SpringBootApplication
 @EnableDiscoveryClient
 @EnableFeignClients
-@MapperScan(basePackages="com.zhku.message")
+@MapperScan(basePackages="com.zhku.message.mapper")
+@ComponentScan(basePackages= {"com.zhku"})
 public class MessageApplication {
 	
 	public static void main(String[] args) {

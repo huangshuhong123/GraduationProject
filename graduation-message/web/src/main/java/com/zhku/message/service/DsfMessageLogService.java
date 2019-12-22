@@ -16,7 +16,7 @@ import java.util.Map;
  * @email sunlightcs@gmail.com
  * @date 2018-05-17 19:34:19
  */
-public interface DsfMessageLogService {
+public interface DsfMessageLogService extends IService<DsfMessageLogEntity>{
 
     Long save(MessageRequest request);
 

@@ -20,16 +20,16 @@ public class DsfMessageRefController{
     @Autowired
     private DsfMessageRefService dsfMessageRefService;
 
-    @PutMapping("/updateMessageState")
+    @PostMapping("/updateMessageState")
     @ApiOperation("更新消息状态")
-    public void updateMessageState(@RequestBody List<Long> messageIds,String userId){
-            dsfMessageRefService.updateMessageState(messageIds,userId);
+    public void updateMessageState(@RequestParam Long messageId,@RequestParam String userId){
+            dsfMessageRefService.updateMessageState(messageId,userId);
     }
 
 
     @GetMapping("/getUnreadCount")
     @ApiOperation("查询未读消息数量")
-    public Integer getUnreadCount(@RequestParam String terminalType, String userId){
+    public Integer getUnreadCount(@RequestParam String terminalType,@RequestParam String userId){
         return dsfMessageRefService.getUnreadCount(terminalType,userId);
     }
     

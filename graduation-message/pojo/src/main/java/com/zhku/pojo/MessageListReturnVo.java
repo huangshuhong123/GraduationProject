@@ -3,6 +3,7 @@ package com.zhku.pojo;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
@@ -13,7 +14,9 @@ import java.util.Date;
  * @date 2019-05-21 15:52:16
  */
 @Data
-public class MessageListReturnVo {
+public class MessageListReturnVo implements Serializable {
+
+    private static final long serialVersionUID = 1L;
 
     /**
      * 消息模板编码

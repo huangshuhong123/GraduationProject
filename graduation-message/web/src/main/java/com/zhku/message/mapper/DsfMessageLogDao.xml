@@ -2,6 +2,18 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.zhku.message.mapper.DsfMessageLogDao">
+    <resultMap type="com.zhku.pojo.MessageListReturnVo" id="MessageListReturnVoMap">
+        <result property="messageId" jdbcType="VARCHAR" column="message_id"/>
+        <result property="module" jdbcType="VARCHAR" column="module"/>
+        <result property="moduleName" jdbcType="VARCHAR" column="module_name"/>
+        <result property="messageContent" jdbcType="VARCHAR" column="message_content"/>
+        <result property="sendTime" jdbcType="TIMESTAMP" column="send_time"/>
+        <result property="messageState" jdbcType="INTEGER" column="message_state"/>
+        <result property="znxPcUrl" jdbcType="TIMESTAMP" column="znx_pc_url"/>
+        <result property="znxWxUrl" jdbcType="DOUBLE" column="znx_wx_url"/>
+        <result property="znxXcxUrl" jdbcType="VARCHAR" column="znx_xcx_url"/>
+    </resultMap>
+
     <insert id="save" useGeneratedKeys="true" keyProperty="messageId" >
           insert into tb_dsf_message_log(
             message_content
@@ -16,11 +28,11 @@
             ) values
             (#{messageContent},#{messageUrl},#{messageSendUserid},#{messageType},#{terminalType},#{sendTime},#{title},#{mediaId},#{moduleName})
     </insert>
-    <select id="queryLists" resultType="com.zhku.pojo.MessageListReturnVo">
+    <select id="queryLists" resultMap="MessageListReturnVoMap">
         SELECT
-        t.message_id,
+        t.message_id ,
         tp.module,
-        tp.module_name,
+        tp.module_name ,
         t.send_time,
         t1.message_state,
         t1.message_content,
@@ -33,8 +45,8 @@
         WHERE
         t.message_id = t1.message_id
         and t.template_code = tp.template_code
-        <if test="acceptId != null and acceptId != ''">
-            and t1.message_accept_id = #{acceptId}
+        <if test="userId != null and userId != ''">
+            and t1.message_accept_id = #{userId}
         </if>
         and t.template_type = '01'
         and t1.delete_flag = 0

@@ -35,8 +35,8 @@ public class DsfMessageRefServiceImpl extends ServiceImpl<DsfMessageRefDao, DsfM
 
 
     @Override
-    public void updateMessageState(List<Long> messageIds,String userId) {
-        dsfMessageRefDao.updateMessageState(messageIds,userId);
+    public void updateMessageState(Long messageId,String userId) {
+        dsfMessageRefDao.updateMessageState(messageId,userId);
     }
 
     @Override

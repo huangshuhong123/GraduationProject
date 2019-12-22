@@ -23,7 +23,7 @@ public class DsfMessageLogController {
 
     @GetMapping("/list")
     @ApiOperation("查询消息日志列表")
-    public PagedResult list(@RequestParam String userId,@RequestParam Integer page, @RequestParam Integer pageSize){
+    public PagedResult list(@RequestParam String userId,@RequestParam Integer page,Integer pageSize){
         if (page == null) {
             page = 1;
         }
