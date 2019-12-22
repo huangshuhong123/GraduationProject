@@ -2,7 +2,8 @@ package com.zhku.enums;
 
 public enum BGMOperatorTypeEnum {
 	
-	ADD("1", "添加bgm"),				
+	ADD("1", "添加bgm"),
+	FORBID("3","禁播视频"),
 	DELETE("2", "删除bgm");		
 	
 	public final String type;
